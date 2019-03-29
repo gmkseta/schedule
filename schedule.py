@@ -3,21 +3,28 @@ import numpy as np
 from operator import itemgetter 
 import os
 
+class ValidTokenException(Exception):
+    def __init__(self):
+        super(ValidTokenException, self).__init__("ValidTokenException")
 
 
 class Schedule:
     def __init__(self, filePath):
-        self.filePath = filePath
-        self.img = Image.open(filePath) 
-        self.pix = np.array(self.img)
+        try:
+            self.filePath = filePath
+            self.img = Image.open(filePath) 
+            self.pix = np.array(self.img)
+            
+
+            self.json = {'월':[],'화':[],'수':[],'목':[],'금':[]}
+            self.w, self.h = self.img.size
+
+            self.line_rgb = (0,0,0)
+            self.bg_rgb = (0,0,0)
+            self.getToImg()
+        except:
+            raise ValidTokenException
         
-
-        self.json = {'월':[],'화':[],'수':[],'목':[],'금':[]}
-        self.w, self.h = self.img.size
-
-        self.line_rgb = (0,0,0)
-        self.bg_rgb = (0,0,0)
-        self.getToImg()
 
     def getToImg(self):
 
@@ -142,13 +149,5 @@ class Schedule:
         img.show()
 
 
-path_dir = os.getcwd() + '/sample'
-file_list = os.listdir(path_dir)
-
-sc_list = []
-
-
-for i in file_list:
-    sc_list.append(Schedule(path_dir+"/"+i))
 
 

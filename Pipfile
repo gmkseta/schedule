@@ -8,6 +8,7 @@ verify_ssl = true
 [packages]
 pillow = "*"
 numpy = "*"
+pymysql = "*"
 
 [requires]
 python_version = "3.7"
